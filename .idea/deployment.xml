@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" remoteFilesAllowedToDisappearOnAutoupload="false" showDifferentInSync="false" showNewOnTargetInSync="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="root@connect.beijinga.seetacloud.com:51735 password" remoteFilesAllowedToDisappearOnAutoupload="false" showDifferentInSync="false" showNewOnTargetInSync="false">
     <serverData>
       <paths name="root@connect.beijinga.seetacloud.com:34839 password">
         <serverdata>
@@ -20,6 +20,13 @@
         <serverdata>
           <mappings>
             <mapping deploy="/root/autodl-tmp/ViTST-main" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="root@connect.beijinga.seetacloud.com:51735 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/autodl-tmp/ViTST_fzy" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
