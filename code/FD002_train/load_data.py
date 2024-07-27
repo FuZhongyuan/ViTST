@@ -158,5 +158,5 @@ if __name__ == "__main__":
             split_path = '/splits/FD004_split' + str(split_idx) + '.npy'
 
         # prepare the data:
-        Ptrain, Pval, Ptest, label2id, id2label, ytrain, yval, ytest = get_data_split(base_path, split_path)
+        Ptrain, Pval, Ptest, label2id, id2label, ytrain, yval, ytest = get_data_split(base_path, split_path,split_idx)
         print(len(Ptrain), len(Pval), len(Ptest))
