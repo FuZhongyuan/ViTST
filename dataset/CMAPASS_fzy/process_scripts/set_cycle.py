@@ -25,6 +25,7 @@ for i in range(n):
     p = P_list[i * 6:(i + 1) * 6]
     L = p[0]['ts'] + p[1]['ts'] + p[2]['ts'] + p[3]['ts'] + p[4]['ts'] + p[5]['ts']  # 把同一个id的六个工况的ts数据整合到一起
     L.sort()
+    len_L= len(L)
     if (len(L) < max_t):  # 整合到一起后长度小于200的话肯定就不满足
         continue
     distribution = []  # 找分布 看周期是从哪一个工况过来的
@@ -52,6 +53,7 @@ for i in range(n):
     res["id"]=my_dict["id"]
     res["remain_life"]=arr_outcomes[int(res["id"]-1)][0]
     res["is_fullcycle"]=1-arr_outcomes[int(res["id"]-1)][1]
+    res["remain_life"]=res["remain_life"]+len_L-max_t
     result.append(res)
 
 
