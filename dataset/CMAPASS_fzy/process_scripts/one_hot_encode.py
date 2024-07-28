@@ -63,15 +63,15 @@ for i in range(1, 5):
         static = P_list[ind]['static']
         condition_type = P_list[ind]['condition']
         ts = P_list[ind]['ts']
-        if ts[-1][0]<max_tmins:
-            continue;
+        # if ts[-1][0]<max_tmins:
+        #     continue;
 
         # find unique times
         unq_tmins = []
         for sample in ts:
             current_tmin = sample[0]
-            if (current_tmin not in unq_tmins) and (current_tmin < max_tmins):
-                unq_tmins.append(current_tmin)
+            # if (current_tmin not in unq_tmins) and (current_tmin < max_tmins):
+            unq_tmins.append(current_tmin)
         #     print('unique times (mins):', unq_tmins)
         #     print('sequence length: ', len(unq_tmins))
         unq_tmins = np.array(unq_tmins)
