@@ -12,7 +12,7 @@ num_of_conditions = 6
 """
 Dataset configurations 
 """
-max_tmins = 378.0
+max_tmins = 100.0
 """
 FD001:max unique time series length: 362.0
 FD002:max unique time series length: 378.0
@@ -462,7 +462,7 @@ def construct_image(
         image_size=None
 ):
     # load data
-    Pdict_list = np.load(f'../processed_data/PTdict_list_' + str(choose_num) + '.npy', allow_pickle=True)
+    Pdict_list = np.load(f'../processed_data/fd002/data' + str(choose_num) + '.npy', allow_pickle=True)
     arr_outcomes = np.load(f'../processed_data/arr_outcomes_' + str(choose_num) + '.npy', allow_pickle=True)
     ts_params = np.load(f'../processed_data/ts_params.npy', allow_pickle=True)
 

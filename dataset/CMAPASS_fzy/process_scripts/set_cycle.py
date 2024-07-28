@@ -18,8 +18,9 @@ print(len(static_params), static_params)
 
 PTdict_list = []
 DIS = []  # 工况随着周期的分布 例子：dis[0][0]=6 表示id=1的发动机的第一个周期是第六种工况
+result=[]
 n = int(len(P_list) / 6)
-max_t = 200
+max_t = 100
 for i in range(n):
     p = P_list[i * 6:(i + 1) * 6]
     L = p[0]['ts'] + p[1]['ts'] + p[2]['ts'] + p[3]['ts'] + p[4]['ts'] + p[5]['ts']  # 把同一个id的六个工况的ts数据整合到一起
@@ -36,6 +37,7 @@ for i in range(n):
                     distribution.append(k + 1)
     np.array(distribution)
     DIS.append(distribution)
+    res={}
     for u in range(6):
         ID = P_list[i*6+u]['id']
         static = P_list[i*6+u]['static']  # 六种工况不知道取哪一个作为静态变量
@@ -47,11 +49,18 @@ for i in range(n):
                    'arr': np.array([list(t[1:]) for t in ts]),
                    'time': [t[0] for t in ts], 'length': length, 'condition': condition}
         PTdict_list.append(my_dict)
+    res["id"]=my_dict["id"]
+    res["remain_life"]=arr_outcomes[int(res["id"]-1)][0]
+    res["is_fullcycle"]=1-arr_outcomes[int(res["id"]-1)][1]
+    result.append(res)
+
 
 PTdict_list=np.array(PTdict_list)
 DIS=np.array(DIS)
+result=np.array(result)
 np.save("../processed_data/fd002/data" + ".npy", PTdict_list)
 np.save("../processed_data/fd002/DIS" + ".npy", DIS)
+np.save("../processed_data/fd002/result" + ".npy", result)
 
 
 
