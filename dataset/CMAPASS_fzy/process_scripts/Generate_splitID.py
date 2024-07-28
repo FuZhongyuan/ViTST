@@ -2,41 +2,44 @@ import random
 
 import numpy as np
 
-# arr_outcomes = np.load('../processed_data/arr_outcomes.npy', allow_pickle=True)
-
+arr_outcomes = np.load('../processed_data/fd002/result.npy', allow_pickle=True)
+n_2= len(arr_outcomes)
+n=n_2
+u=2
 # split randomization over folds
 """Use 9:1:1 split"""
 p_train = 0.80
 p_val = 0.10
 p_test = 0.10
 
-"""
 
-for u in range(1, 5):
-    if u == 1:
-        n = 200
-    elif u == 2:
-        n = 519
-    elif u == 3:
-        n = 200
-    elif u == 4:
-        n = 497
-    
+
+# for u in range(1, 5):
+#     if u == 1:
+#         n = 200
+#     elif u == 2:
+#         n = n_2 # FD002
+#     elif u == 3:
+#         n = 200
+#     elif u == 4:
+#         n = 497
+
     # n = 11988  # original 12000 patients, remove 12 outliers
-    n_train = round(n * p_train)
-    n_val = round(n * p_val)
-    n_test = n - (n_train + n_val)
-    print(n_train, n_val, n_test)
-    Nsplits = 5
-    for j in range(Nsplits):
-        p = np.random.permutation(n)
-        idx_train = p[:n_train]
-        idx_val = p[n_train:n_train + n_val]
-        idx_test = p[n_train + n_val:]
-        np.save('../splits/FD00'+str(u)+'_split' + str(j + 1) + '.npy', (idx_train, idx_val, idx_test))
+n_train = round(n * p_train)
+n_val = round(n * p_val)
+n_test = n - (n_train + n_val)
+print(n_train, n_val, n_test)
+Nsplits = 5
+for j in range(Nsplits):
+    p = np.random.permutation(n)
+    idx_train = p[:n_train]
+    idx_val = p[n_train:n_train + n_val]
+    idx_test = p[n_train + n_val:]
+    np.save('../splits/FD00'+str(u)+'/FD00'+str(u)+'_split' + str(j + 1) + '.npy', (idx_train, idx_val, idx_test))
 
     # np.save('../splits/phy12_split_subset'+str(j+1)+'.npy', (idx_train, idx_val, idx_test))
 print('split IDs saved')
+
 """
 # # check first split
 # idx_train,idx_val,idx_test = np.load('../splits/phy12_split1.npy', allow_pickle=True)
@@ -69,4 +72,4 @@ for j in range(Nsplits):
     idx_test = p[n_train + n_val:]
     np.save('../splits/FD002/FD00' + str(u) + '_split' + str(j + 1) + '.npy', (idx_train, idx_val, idx_test))
 
-
+"""

@@ -338,7 +338,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     
     # arguments for dataset
-    parser.add_argument('--dataset', type=str, default='FD001') #
+    parser.add_argument('--dataset', type=str, default='FD002') #
     parser.add_argument('--dataset_prefix', type=str, default='FD001_order_differ_interpolation_-x1_xx2_4x6_256x384_') #
     
     parser.add_argument('--withmissingratio', default=False, help='if True, missing ratio ranges from 0 to 0.5; if False, missing ratio =0') #

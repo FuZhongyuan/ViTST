@@ -67,7 +67,10 @@ def get_data_split(base_path, split_path, split_idx, dataset='FD001', prefix='',
         arr_outcomes = np.load(base_path + '/processed_data/arr_outcomes.npy', allow_pickle=True)
         task = "regression"
 
-    y = arr_outcomes[:, -1].reshape((-1, 1))
+    y=[item['remain_life'] for item in arr_outcomes if 'is_full_cycle' in item]
+    y = np.array(y)
+    y=y.reshape((-1, 1))
+    # y = arr_outcomes[:]["is_full_cycle"].reshape((-1, 1))
     if task == "classification":
         y = y.astype(np.int32)
     elif task == "regression":
@@ -111,7 +114,7 @@ def get_data_split(base_path, split_path, split_idx, dataset='FD001', prefix='',
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default='FD001', choices=['FD001', 'FD002', 'FD003', 'FD004'])  #
+    parser.add_argument('--dataset', type=str, default='FD002', choices=['FD001', 'FD002', 'FD003', 'FD004'])  #
     parser.add_argument('--withmissingratio', default=False,
                         help='if True, missing ratio ranges from 0 to 0.5; if False, missing ratio =0')  #
     parser.add_argument('--feature_removal_level', type=str, default='no_removal',
@@ -147,15 +150,15 @@ if __name__ == "__main__":
         print('Split id: %d' % split_idx)
         if dataset == 'FD001':
             if subset == True:
-                split_path = '/splits/FD001_split_subset' + str(split_idx) + '.npy'
+                split_path = '/splits/FD001/FD001_split_subset' + str(split_idx) + '.npy'
             else:
-                split_path = '/splits/FD001_split' + str(split_idx) + '.npy'
+                split_path = '/splits/FD001/FD001_split' + str(split_idx) + '.npy'
         elif dataset == 'FD002':
-            split_path = '/splits/FD002_split' + str(split_idx) + '.npy'
+            split_path = '/splits/FD002/FD002_split' + str(split_idx) + '.npy'
         elif dataset == 'FD003':
-            split_path = '/splits/FD003_split' + str(split_idx) + '.npy'
+            split_path = '/splits/FD003/FD003_split' + str(split_idx) + '.npy'
         elif dataset == 'FD004':
-            split_path = '/splits/FD004_split' + str(split_idx) + '.npy'
+            split_path = '/splits/FD004/FD004_split' + str(split_idx) + '.npy'
 
         # prepare the data:
         Ptrain, Pval, Ptest, label2id, id2label, ytrain, yval, ytest = get_data_split(base_path, split_path,split_idx)
