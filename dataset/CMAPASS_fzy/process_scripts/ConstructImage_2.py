@@ -462,8 +462,8 @@ def construct_image(
         image_size=None
 ):
     # load data
-    Pdict_list = np.load(f'../processed_data/fd002/data' + str(choose_num) + '.npy', allow_pickle=True)
-    arr_outcomes = np.load(f'../processed_data/arr_outcomes_' + str(choose_num) + '.npy', allow_pickle=True)
+    Pdict_list = np.load(f'../processed_data/fd00' + str(choose_num) + '/data.npy', allow_pickle=True)
+    arr_outcomes = np.load(f'../processed_data/fd00' + str(choose_num) + '/result.npy', allow_pickle=True)
     ts_params = np.load(f'../processed_data/ts_params.npy', allow_pickle=True)
 
     num_samples = len(Pdict_list)
@@ -513,7 +513,7 @@ def construct_image(
         demogr_lengths = []
 
         base_path = '../'
-        split_path = '/splits/FD00' + str(choose_num) + '_split' + str(split_idx + 1) + '.npy'
+        split_path = '/splits/FD00' + str(choose_num) + '/FD00' + str(choose_num) + '_split' + str(split_idx + 1) + '.npy'
         idx_train, idx_val, idx_test = np.load(base_path + split_path, allow_pickle=True)
         # extract train/val/test examples
         Ptrain = Pdict_list[idx_train]
@@ -647,7 +647,7 @@ def construct_image(
 
                 # textual label
                 arr_outcome = arr_outcomes[group_idx]
-                label = int(arr_outcome[-1])
+                label = int(arr_outcome['is_full_cycle'])
                 label_name = "Total life cycle" if label == 1 else "Partial life cycle"
 
                 # static feature

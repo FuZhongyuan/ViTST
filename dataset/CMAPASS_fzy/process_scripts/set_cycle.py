@@ -52,7 +52,7 @@ for i in range(n):
         PTdict_list.append(my_dict)
     res["id"]=my_dict["id"]
     res["remain_life"]=arr_outcomes[int(res["id"]-1)][0]
-    res["is_fullcycle"]=1-arr_outcomes[int(res["id"]-1)][1]
+    res["is_full_cycle"]=1-arr_outcomes[int(res["id"]-1)][1]
     res["remain_life"]=res["remain_life"]+len_L-max_t
     result.append(res)
 
