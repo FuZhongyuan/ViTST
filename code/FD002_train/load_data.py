@@ -10,7 +10,7 @@ from datasets import load_metric
 from datasets import Dataset, Image
 
 
-def load_image(Pdict_list, y, base_path, split_idx, dataset_prefix, missing_ratio):
+def load_image(Pdict_list, y, base_path, split_idx, dataset_prefix, missing_ratio,max_tmins):
     images_path = []
     labels = []
     texts = []
@@ -23,9 +23,9 @@ def load_image(Pdict_list, y, base_path, split_idx, dataset_prefix, missing_rati
         texts.append(text)
 
         if missing_ratio == 0:
-            image_path = base_path + f'/processed_data/{dataset_prefix}split{split_idx - 1}_images/{pid}.png'
+            image_path = base_path + f'/processed_data/{dataset_prefix}split{split_idx - 1}_cut_by{max_tmins}/{pid}.png'
         elif missing_ratio in [0.1, 0.2, 0.3, 0.4, 0.5]:
-            image_path = base_path + f'/processed_data/{dataset_prefix}ms{missing_ratio}_images/{pid}.png'
+            image_path = base_path + f'/processed_data/{dataset_prefix}ms{missing_ratio}_cut_by{max_tmins}/{pid}.png'
         else:
             raise Exception(f"No dataset for this missing ratio {missing_ratio}")
         images_path.append(image_path)
@@ -40,22 +40,22 @@ def get_data_split(base_path, split_path, split_idx, dataset='FD001', prefix='',
     # load data
     if dataset == 'FD001':
         Pdict_list = np.load(base_path + f'/processed_data/FD001_ImageDict_list.npy', allow_pickle=True)
-        arr_outcomes = np.load(base_path + '/processed_data/arr_outcomes_1.npy', allow_pickle=True)
+        arr_outcomes = np.load(base_path + '/processed_data/fd001/result.npy', allow_pickle=True)
         task = "regression"
         num_labels = 2
     elif dataset == 'FD002':
         Pdict_list = np.load(base_path + f'/processed_data/FD002_ImageDict_list.npy', allow_pickle=True)
-        arr_outcomes = np.load(base_path + '/processed_data/arr_outcomes_2.npy', allow_pickle=True)
+        arr_outcomes = np.load(base_path + '/processed_data/fd002/result.npy', allow_pickle=True)
         task = "regression"
         num_labels = 2
     elif dataset == 'FD003':
         Pdict_list = np.load(base_path + f'/processed_data/FD003_ImageDict_list.npy', allow_pickle=True)
-        arr_outcomes = np.load(base_path + '/processed_data/arr_outcomes_3.npy', allow_pickle=True)
+        arr_outcomes = np.load(base_path + '/processed_data/fd003/result.npy', allow_pickle=True)
         task = "regression"
         num_labels = 8
     elif dataset == 'FD004':
         Pdict_list = np.load(base_path + f'/processed_data/FD004_ImageDict_list.npy', allow_pickle=True)
-        arr_outcomes = np.load(base_path + '/processed_data/arr_outcomes_4.npy', allow_pickle=True)
+        arr_outcomes = np.load(base_path + '/processed_data/fd004/result.npy', allow_pickle=True)
         task = "regression"
         num_labels = 8
     elif "Classification" in base_path:

@@ -44,11 +44,15 @@ for i in range(n):
         static = P_list[i*6+u]['static']  # 六种工况不知道取哪一个作为静态变量
         condition = P_list[i*6+u]['condition']
         ts = P_list[i*6+u]['ts']
+        new_ts=[]
+        for y in P_list[i * 6 + u]['ts']:
+            if y[0] <= max_t:
+                new_ts.append(y)
         extended_static = [static[0], static[1], static[2], condition]
-        length = len([t[0] for t in ts])
+        length = len([t[0] for t in new_ts])
         my_dict = {'id': ID, 'static': static, 'extended_static': extended_static,
-                   'arr': np.array([list(t[1:]) for t in ts]),
-                   'time': [t[0] for t in ts], 'length': length, 'condition': condition}
+                   'arr': np.array([list(t[1:]) for t in new_ts]),
+                   'time': [t[0] for t in new_ts], 'length': length, 'condition': condition}
         PTdict_list.append(my_dict)
     res["id"]=my_dict["id"]
     res["remain_life"]=arr_outcomes[int(res["id"]-1)][0]

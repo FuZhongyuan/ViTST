@@ -251,8 +251,8 @@ def draw_image(pid, split_idx, ts_orders, ts_values, ts_times, ts_condition, ts_
     plt.figure(figsize=(img_width/ dpi , img_height/ dpi),dpi=dpi)
 
     # save path
-    base_path = f"{linestyle}x{linewidth}_{marker}x{markersize}_{grid_height}x{grid_width}_{img_height}x{img_width}_split{split_idx}_images"
-    base_path2 = f"{linestyle}x{linewidth}_{marker}x{markersize}_{grid_height}x{grid_width}_{img_height}x{img_width}_split{split_idx}_images"
+    base_path = f"{linestyle}x{linewidth}_{marker}x{markersize}_{grid_height}x{grid_width}_{img_height}x{img_width}_split{split_idx}_cut_by{max_tmins}"
+    base_path2 = f"{linestyle}x{linewidth}_{marker}x{markersize}_{grid_height}x{grid_width}_{img_height}x{img_width}_split{split_idx}_cut_by{max_tmins}"
 
     if interpolation:
         base_path = "interpolation_" + base_path
@@ -393,9 +393,10 @@ def draw_image(pid, split_idx, ts_orders, ts_values, ts_times, ts_condition, ts_
     plt.subplots_adjust(top=1, bottom=0, right=1, left=0, hspace=0, wspace=0)
     plt.margins(0, 0)
     # 显示图表
-    plt.show()
     plt.savefig(img_path, pad_inches=0)
+    # plt.show()
     plt.clf()
+    plt.close()
 
 
     # for idx, param_idx in enumerate(ts_orders):
@@ -437,7 +438,7 @@ def draw_image(pid, split_idx, ts_orders, ts_values, ts_times, ts_condition, ts_
     plt.xticks([])
     plt.yticks([])
     plt.savefig(img_path2, pad_inches=0)
-    plt.show()
+    # plt.show()
 
     # drawed_params.append(param)
     # plt.show()
@@ -447,6 +448,7 @@ def draw_image(pid, split_idx, ts_orders, ts_values, ts_times, ts_condition, ts_
 
 
     plt.clf()
+    plt.close()
 
     return drawed_params
 

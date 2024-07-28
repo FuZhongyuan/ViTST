@@ -535,15 +535,15 @@ if __name__ == "__main__":
             print('Split id: %d' % split_idx)
             if dataset == 'FD001':
                 if subset == True:
-                    split_path = '/splits/FD001_split_subset' + str(split_idx) + '.npy'
+                    split_path = '/splits/FD001/FD001_split_subset' + str(split_idx) + '.npy'
                 else:
                     split_path = '/splits/FD001_split' + str(split_idx) + '.npy'
             elif dataset == 'FD002':
-                split_path = '/splits/FD002_split' + str(split_idx) + '.npy'
+                split_path = '/splits/FD002/FD002_split' + str(split_idx) + '.npy'
             elif dataset == 'FD003':
-                split_path = '/splits/FD003_split' + str(split_idx) + '.npy'
+                split_path = '/splits/FD003/FD003_split' + str(split_idx) + '.npy'
             elif dataset == 'FD004':
-                split_path = '/splits/FD004_split' + str(split_idx) + '.npy'
+                split_path = '/splits/FD004/FD004_split' + str(split_idx) + '.npy'
 
             # fine the pretrained mim image model 
             if args.finetune_mim:
