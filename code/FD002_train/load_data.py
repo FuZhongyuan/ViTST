@@ -10,7 +10,7 @@ from datasets import load_metric
 from datasets import Dataset, Image
 
 
-def load_image(Pdict_list, y, base_path, split_idx, dataset_prefix, missing_ratio,max_tmins):
+def load_image(Pdict_list, y, base_path, split_idx, dataset_prefix, missing_ratio, max_tmins):
     images_path = []
     labels = []
     texts = []
@@ -67,15 +67,15 @@ def get_data_split(base_path, split_path, split_idx, dataset='FD001', prefix='',
         arr_outcomes = np.load(base_path + '/processed_data/arr_outcomes.npy', allow_pickle=True)
         task = "regression"
 
-    y=[item['remain_life'] for item in arr_outcomes if 'is_full_cycle' in item]
+    y = [item['remain_life'] for item in arr_outcomes if 'is_full_cycle' in item]
     y = np.array(y)
-    y=y.reshape((-1, 1))
+    y = y.reshape((-1, 1))
     # y = arr_outcomes[:]["is_full_cycle"].reshape((-1, 1))
     if task == "classification":
         y = y.astype(np.int32)
     elif task == "regression":
         y = y.astype(np.float32)
-
+    q = np.load(base_path + split_path, allow_pickle=True)
     idx_train, idx_val, idx_test = np.load(base_path + split_path, allow_pickle=True)
     # extract train/val/test examples
     Ptrain = Pdict_list[idx_train]
@@ -161,5 +161,5 @@ if __name__ == "__main__":
             split_path = '/splits/FD004/FD004_split' + str(split_idx) + '.npy'
 
         # prepare the data:
-        Ptrain, Pval, Ptest, label2id, id2label, ytrain, yval, ytest = get_data_split(base_path, split_path,split_idx)
+        Ptrain, Pval, Ptest, label2id, id2label, ytrain, yval, ytest = get_data_split(base_path, split_path, split_idx)
         print(len(Ptrain), len(Pval), len(Ptest))
