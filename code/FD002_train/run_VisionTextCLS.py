@@ -56,7 +56,7 @@ def fine_tune_hf(
     freeze_vision_model,
     freeze_text_model,
     output_dir,
-    train_dataset,
+    train_dataset,# todo：注意要改
     val_dataset,
     test_dataset,
     image_size,
