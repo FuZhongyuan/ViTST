@@ -17,7 +17,7 @@ def load_image(Pdict_list, y, base_path, split_idx, dataset_prefix, missing_rati
     for idx, d in enumerate(Pdict_list):
         pid = d['id']
         text = d['text']
-        assert d['label'] == y[idx]
+        assert d['arr_outcome']['remain_life'] == y[idx]
         label = y[idx]
         labels.append(label)
         texts.append(text)
@@ -36,7 +36,7 @@ def load_image(Pdict_list, y, base_path, split_idx, dataset_prefix, missing_rati
     return dataset, datadict
 
 
-def get_data_split(base_path, split_path, split_idx, dataset='FD001', prefix='', upsample=False, missing_ratio=0.):
+def get_data_split(base_path, split_path, split_idx, dataset='FD001', prefix='', upsample=False, missing_ratio=0.,max_tmins=100.0):
     # load data
     if dataset == 'FD001':
         Pdict_list = np.load(base_path + f'/processed_data/FD001_ImageDict_list.npy', allow_pickle=True)
@@ -75,7 +75,7 @@ def get_data_split(base_path, split_path, split_idx, dataset='FD001', prefix='',
         y = y.astype(np.int32)
     elif task == "regression":
         y = y.astype(np.float32)
-    q = np.load(base_path + split_path, allow_pickle=True)
+    # q = np.load(base_path + split_path, allow_pickle=True)
     idx_train, idx_val, idx_test = np.load(base_path + split_path, allow_pickle=True)
     # extract train/val/test examples
     Ptrain = Pdict_list[idx_train]
@@ -105,9 +105,9 @@ def get_data_split(base_path, split_path, split_idx, dataset='FD001', prefix='',
         ytrain = ytrain[upsampled_train_idx]
 
     # only remove part of params in val, test set
-    train_dataset, train_datadict = load_image(Ptrain, ytrain, base_path, split_idx, prefix, 0.)
-    val_dataset, val_datadict = load_image(Pval, yval, base_path, split_idx, prefix, missing_ratio)
-    test_dataset, test_datadict = load_image(Ptest, ytest, base_path, split_idx, prefix, missing_ratio)
+    train_dataset, train_datadict = load_image(Ptrain, ytrain, base_path, split_idx, prefix, missing_ratio=0.,max_tmins=max_tmins)
+    val_dataset, val_datadict = load_image(Pval, yval, base_path, split_idx, prefix, missing_ratio,max_tmins=max_tmins)
+    test_dataset, test_datadict = load_image(Ptest, ytest, base_path, split_idx, prefix, missing_ratio,max_tmins=max_tmins)
 
     return train_dataset, val_dataset, test_dataset, ytrain, yval, ytest
 

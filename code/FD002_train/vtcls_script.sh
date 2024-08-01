@@ -9,7 +9,7 @@ CUDA_VISIBLE_DEVICES=0 /root/.virtualenvs/ViTST-main/bin/python run_VisionTextCL
     --text_model roberta \
     --freeze_vision_model False \
     --freeze_text_model False \
-    --dataset FD001 \
+    --dataset FD002 \
     --dataset_prefix $dataset_prefix \
     --seed 10 \
     --save_total_limit 1 \
@@ -21,7 +21,7 @@ CUDA_VISIBLE_DEVICES=0 /root/.virtualenvs/ViTST-main/bin/python run_VisionTextCL
     --learning_rate 2e-5 \
     --n_runs 1 \
     --n_splits 5 \
-    --do_train
+    --do_train True
 done
 
 # P19 dataset

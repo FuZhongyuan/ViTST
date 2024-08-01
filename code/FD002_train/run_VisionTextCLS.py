@@ -348,9 +348,9 @@ if __name__ == "__main__":
                         help='use this only with P12 dataset (mortality or length of stay)')
     
     # arguments for huggingface training
-    parser.add_argument('--image_model', type=str, default='vit') #
+    parser.add_argument('--image_model', type=str, default='swin') #
     parser.add_argument('--image_model_path', type=str, default=None)
-    parser.add_argument('--text_model', type=str, default='bert', choices=['bert','roberta']) #
+    parser.add_argument('--text_model', type=str, default='roberta', choices=['bert','roberta']) #
     parser.add_argument('--text_model_path', type=str, default=None)
     parser.add_argument('--max_length', type=int, default=36) 
     parser.add_argument('--output_dir', type=str, default=None)
@@ -375,11 +375,12 @@ if __name__ == "__main__":
     parser.add_argument('--mask_method', type=str, default=None)
 
     # argument for ablation study
-    parser.add_argument('--do_train', action='store_true')
+    parser.add_argument('--do_train', type=bool, default=True)
     parser.add_argument('--finetune_mim', action='store_true')
     parser.add_argument('--freeze_vision_model', type=str, default="False")
     parser.add_argument('--freeze_text_model', type=str, default="False")
     parser.add_argument('--continue_training', action='store_true')
+    parser.add_argument('--cut_by_number', type=float, default=100.0)
 
     args = parser.parse_args()
 
@@ -393,33 +394,36 @@ if __name__ == "__main__":
     mask_patch_size = args.mask_patch_size
     mask_ratio = args.mask_ratio
     mask_method = args.mask_method
+    cut_nub=args.cut_by_number
     freeze_vision_model = args.freeze_vision_model
     freeze_text_model = args.freeze_text_model
     if dataset == 'FD001':
         base_path = '../../dataset/CMAPASS_fzy'
         num_classes = 1
-        upsample = True
+        upsample = False #表示不用平衡数据集
         epochs = 20
-        image_size = (256,384)
-        grid_layout = (4,6)
+        image_size = (3360,2560)
+        grid_layout = (21,1)
     elif dataset == 'FD002':
         base_path = '../../dataset/CMAPASS_fzy'
         num_classes = 1
-        upsample = True
+        upsample = False
         epochs = 20
-        image_size = (256,384)
-        grid_layout = (4,6)
+        image_size = (3360,2560)
+        grid_layout = (21,1)
     elif dataset == 'FD003':
         base_path = '../../dataset/CMAPASS_fzy'
         num_classes = 1
-        image_size = (256,384)
-        grid_layout = (4,6)
+        upsample = False
+        image_size = (3360,2560)
+        grid_layout = (21,1)
         epochs = 20
     elif dataset == 'FD004':
         base_path = '../../dataset/CMAPASS_fzy'
         num_classes = 1
-        image_size = (256,364)
-        grid_layout = (4,6)
+        upsample = False
+        image_size = (3360,2560)
+        grid_layout = (21,1)
         epochs = 20
     elif dataset == 'EthanolConcentration':
         base_path = '../../dataset/TSRAdata/Classification/EthanolConcentration'
@@ -570,7 +574,7 @@ if __name__ == "__main__":
                 output_dir = f"../../ckpt/VisionTextCLS/{args.output_dir}/split{split_idx}"
 
             # prepare the data:
-            Ptrain, Pval, Ptest, ytrain, yval, ytest = get_data_split(base_path, split_path, split_idx, dataset=dataset, prefix=dataset_prefix, upsample=upsample, missing_ratio=missing_ratio)
+            Ptrain, Pval, Ptest, ytrain, yval, ytest = get_data_split(base_path, split_path, split_idx, dataset=dataset, prefix=dataset_prefix, upsample=upsample, missing_ratio=missing_ratio,max_tmins=cut_nub)
             print(len(Ptrain), len(Pval), len(Ptest), len(ytrain), len(yval), len(ytest))
             
             # if pval is none: use test dataset instead

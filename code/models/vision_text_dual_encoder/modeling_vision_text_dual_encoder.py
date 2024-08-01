@@ -502,6 +502,66 @@ class VisionTextDualEncoderModelForClassification(PreTrainedModel):
         >>> # load fine-tuned model
         >>> model = VisionTextDualEncoderModel.from_pretrained("./vit-bert")
         ```"""
+        """
+        参数:
+        vision_model_name_or_path(' str '， *可选 *，默认为
+        ' None '):
+        启动视觉模型所需的信息。可以是:
+        -一个字符串，在huggingface.co上的模型仓库中托管的预训练模型的 * 模型id *。
+        有效的模型id可以位于根级，如
+        ' bert-base-uncase '，或者位于用户或组织名称下的命名空间，如
+        ' dbmdz/bert-base-german-case '。
+        一个路径到一个包含模型权重的目录
+        [' ~ FlaxPreTrainedModel。Save_pretrained ']，例如
+        ' ./my_model_directory/ '。
+        - PyTorch检查点文件夹 * 的路径或url(例如，' ./pt_model ')。在本例中，是
+        ' from_pt '
+        应该设置为
+        ' True '，并且应该提供一个配置对象作为
+        ' config '
+        参数。这
+        加载路径比使用提供的转换脚本在flex模型中转换PyTorch检查点并随后加载flex模型要慢。
+        Text_model_name_or_path(' str '， *可选 *):
+        启动文本模型所需的信息。可以是:
+        -一个字符串，在huggingface.co上的模型仓库中托管的预训练模型的 * 模型id *。
+        有效的模型id可以位于根级别，如
+        ' bert-base-uncase '，或者位于a
+        用户或组织名，如
+        ' dbmdz/bert-base-german-case '。
+        一个路径到一个包含模型权重的目录
+        [' ~ FlaxPreTrainedModel。Save_pretrained ']，例如
+        ' ./my_model_directory/ '。
+        - PyTorch检查点文件夹 * 的路径或url(例如，' ./pt_model ')。在本例中，是
+        ' from_pt '
+        应该设置为
+        ' True '，并且应该提供一个配置对象作为
+        ' config '
+        参数。这种加载路径比使用提供的转换脚本在flex模型中转换PyTorch检查点并随后加载flex模型要慢。
+        Model_args(剩余位置参数，*可选 *):
+        所有剩余的位置参数将被传递给底层模型的
+        ' __init__ '
+        方法。
+        Kwargs(剩余的关键字参数字典，*可选 *):
+        可用于更新配置对象(在它被加载后)
+        和初始化模型(例如，
+        “output_attentions = True”)。
+        —如果需要更新文本配置，请在每个配置参数前加上前缀“*text_ *”。
+        —如果需要更新视觉配置，请在每个配置参数前加上前缀“*vision_ *”。
+        —为了更新父模型配置，每个配置参数不使用前缀。
+        行为不同取决于是否提供或自动加载
+        ' config '。
+        例子:
+        ”“python
+        从transformer导入VisionTextDualEncoderModel
+        >> >  # 从预训练的ViT和BERT模型初始化模型1。注意投影层将被随机初始化。
+        >> > model = VisionTextDualEncoderModel.from_vision_text_pretrained(
+        …“谷歌 / 维特 - 基地 - patch16 - 224”, “bert - base - uncased”
+        …)
+        >> >  # 保存微调后的模型
+        > > > model.save_pretrained(“。 / vit - bert”)
+        >> >  # 加载微调模型
+        >> > model = VisionTextDualEncoderModel.from_pretrained("./ vitt -bert")
+        """
         kwargs_vision = {
             argument[len("vision_") :]: value for argument, value in kwargs.items() if argument.startswith("vision_")
         }
